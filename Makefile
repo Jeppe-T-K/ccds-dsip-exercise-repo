@@ -4,7 +4,7 @@
 
 PROJECT_NAME = ccds-dsip-exercise-repo
 PYTHON_VERSION = 3.14
-PYTHON_INTERPRETER = python
+PYTHON_INTERPRETER = uv run python
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -77,10 +77,37 @@ create_environment:
 #################################################################################
 
 
+## Run the full pipeline: data -> features -> train -> predict
+.PHONY: pipeline
+pipeline: predict
+
 ## Make dataset
 .PHONY: data
-data: requirements
+data: dataset
+
+.PHONY: dataset
+dataset: requirements
 	$(PYTHON_INTERPRETER) src/dataset.py
+
+## Make features
+.PHONY: features
+features: dataset
+	$(PYTHON_INTERPRETER) src/features.py
+
+## Train a model
+.PHONY: train
+train: features
+	$(PYTHON_INTERPRETER) src/modeling/train.py
+
+## Run inference with the trained model
+.PHONY: predict
+predict: train
+	$(PYTHON_INTERPRETER) src/modeling/predict.py
+
+## Generate plots
+.PHONY: plots
+plots: features
+	$(PYTHON_INTERPRETER) src/plots.py
 
 
 #################################################################################
