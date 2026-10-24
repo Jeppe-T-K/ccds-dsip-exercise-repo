@@ -6,6 +6,18 @@
 
 An example CCDS project that you can use to build your own project with
 
+## About this repository
+
+This is an example repository generated from the [CCDS template](https://cookiecutter-data-science.drivendata.org/).
+The structure below is a suggestion for how to organize a data science project — use it as
+a starting point and adapt it to your own workflow.
+
+For the exercises, look in [`pipeline_steps/`](pipeline_steps/). There you will find example
+files for each stage of a data science pipeline (data extraction, validation, preparation,
+model training, evaluation, packaging, and inference). Use these as inspiration to
+implement the stages yourself in `src/`, and build a simple Makefile pipeline from them
+(e.g. `make data`, `make features`, `make train`, `make predict`).
+
 ## Project Organization
 
 ```
