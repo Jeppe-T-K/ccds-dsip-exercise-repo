@@ -1,28 +1,47 @@
 from pathlib import Path
 
+from dotenv import load_dotenv
 from loguru import logger
-from tqdm import tqdm
+from sklearn.datasets import load_iris
 import typer
 
-from src.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
+from src.config import RAW_DATA_DIR
+
+load_dotenv()
 
 app = typer.Typer()
 
 
+IRIS_COLUMNS = [
+    "sepal_length_cm",
+    "sepal_width_cm",
+    "petal_length_cm",
+    "petal_width_cm",
+    "species",
+]
+
+
 @app.command()
 def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = RAW_DATA_DIR / "dataset.csv",
-    output_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    # ----------------------------------------------
+    output_path: Path = RAW_DATA_DIR / "iris.csv",
 ):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
-    logger.info("Processing dataset...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
-    logger.success("Processing dataset complete.")
-    # -----------------------------------------
+    """Load the iris dataset and persist it as raw CSV."""
+    logger.info("Loading iris dataset...")
+    bunch = load_iris(as_frame=True)
+    df = bunch.frame.rename(
+        columns={
+            "sepal length (cm)": IRIS_COLUMNS[0],
+            "sepal width (cm)": IRIS_COLUMNS[1],
+            "petal length (cm)": IRIS_COLUMNS[2],
+            "petal width (cm)": IRIS_COLUMNS[3],
+            "target": "species",
+        }
+    )
+    df["species"] = df["species"].map({i: name for i, name in enumerate(bunch.target_names)})
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(output_path, index=False)
+    logger.success(f"Saved {len(df)} rows to {output_path}")
 
 
 if __name__ == "__main__":

@@ -29,22 +29,22 @@ clean:
 ## Lint using flake8, black, and isort (use `make format` to do formatting)
 .PHONY: lint
 lint:
-	flake8 src
-	isort --check --diff src
-	black --check src
+	$(PYTHON_INTERPRETER) -m flake8 src
+	$(PYTHON_INTERPRETER) -m isort --check --diff src
+	$(PYTHON_INTERPRETER) -m black --check src
 
 ## Format source code with black
 .PHONY: format
 format:
-	isort src
-	black src
+	$(PYTHON_INTERPRETER) -m isort src
+	$(PYTHON_INTERPRETER) -m black src
 
 
 
 ## Run tests
 .PHONY: test
 test:
-	python -m pytest tests
+	$(PYTHON_INTERPRETER) -m pytest tests
 ## Download Data from storage system
 .PHONY: sync_data_down
 sync_data_down:
