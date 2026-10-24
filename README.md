@@ -18,6 +18,10 @@ model training, evaluation, packaging, and inference). Use these as inspiration 
 implement the stages yourself in `src/`, and build a simple Makefile pipeline from them
 (e.g. `make data`, `make features`, `make train`, `make predict`).
 
+Note that the way things are organized in `src/`, as well as the Makefile template, are just
+suggestions generated with AI — you are free to reorganize them however you like. The goal
+of the exercise is simply to try and create a local pipeline that works.
+
 ## Project Organization
 
 ```
