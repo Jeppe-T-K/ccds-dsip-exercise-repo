@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7.0.1
+
+      - name: Set up Go
+        uses: actions/setup-go@v7.0.0
+        with:
+          go-version: 1.26.1
+          cache: false
+
+      - name: Run Dagger pipeline
+        uses: dagger/dagger-for-github@v8.4.1
+        with:
+          verb: run
+          args: go run pipeline.go
+          workdir: go
+          version: "0.21.11"
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: model
+          path: models/
