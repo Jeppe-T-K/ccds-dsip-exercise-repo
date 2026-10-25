@@ -22,6 +22,20 @@ Note that the way things are organized in `src/`, as well as the Makefile templa
 suggestions generated with AI — you are free to reorganize them however you like. The goal
 of the exercise is simply to try and create a local pipeline that works.
 
+## Dagger pipeline
+
+The pipeline can also run with [Dagger](https://dagger.io/) from the `go/` directory:
+
+```bash
+cd go
+go run .
+```
+
+This requires Go (1.26+) and Docker on your machine. The Dagger pipeline runs the same four
+steps as `make pipeline` (`dataset` -> `features` -> `train` -> `predict`) inside a
+`ghcr.io/astral-sh/uv:python3.14-bookworm` container, and exports the `data/`, `models/` and
+`reports/` directories back to the repository.
+
 ## Project Organization
 
 ```

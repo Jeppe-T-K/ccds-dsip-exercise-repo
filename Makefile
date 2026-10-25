@@ -79,34 +79,39 @@ create_environment:
 
 ## Run the full pipeline: data -> features -> train -> predict
 .PHONY: pipeline
-pipeline: predict
+pipeline:
+	$(MAKE) requirements
+	$(MAKE) data
+	$(MAKE) features
+	$(MAKE) train
+	$(MAKE) predict
 
 ## Make dataset
 .PHONY: data
 data: dataset
 
 .PHONY: dataset
-dataset: requirements
+dataset:
 	$(PYTHON_INTERPRETER) src/dataset.py
 
 ## Make features
 .PHONY: features
-features: dataset
+features:
 	$(PYTHON_INTERPRETER) src/features.py
 
 ## Train a model
 .PHONY: train
-train: features
+train:
 	$(PYTHON_INTERPRETER) src/modeling/train.py
 
 ## Run inference with the trained model
 .PHONY: predict
-predict: train
+predict:
 	$(PYTHON_INTERPRETER) src/modeling/predict.py
 
 ## Generate plots
 .PHONY: plots
-plots: features
+plots:
 	$(PYTHON_INTERPRETER) src/plots.py
 
 
