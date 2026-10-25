@@ -23,7 +23,6 @@ jobs:
         with:
           verb: run
           args: go run pipeline.go
-          workdir: go
           version: "0.21.11"
 
       - name: Upload model artifact

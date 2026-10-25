@@ -26,9 +26,9 @@ func Pipeline(ctx context.Context) error {
 	}
 	defer client.Close()
 
-	// The project root is one level above this go/ directory.
+	// The project root, i.e. the directory you run `go run` from.
 	// Only copy what the pipeline needs into the container.
-	project := client.Host().Directory("..", dagger.HostDirectoryOpts{
+	project := client.Host().Directory(".", dagger.HostDirectoryOpts{
 		Include: []string{
 			"src",
 			"pyproject.toml",
@@ -53,7 +53,7 @@ func Pipeline(ctx context.Context) error {
 	// Copy the pipeline outputs from the container back to the host
 	outputs := []string{"data", "models", "reports"}
 	for _, dir := range outputs {
-		if _, err := pipeline.Directory("/app/" + dir).Export(ctx, "../"+dir); err != nil {
+		if _, err := pipeline.Directory("/app/" + dir).Export(ctx, dir); err != nil {
 			return err
 		}
 	}

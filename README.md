@@ -24,11 +24,10 @@ of the exercise is simply to try and create a local pipeline that works.
 
 ## Dagger pipeline
 
-The pipeline can also run with [Dagger](https://dagger.io/) from the `go/` directory:
+The pipeline can also run with [Dagger](https://dagger.io/) from the repo root:
 
 ```bash
-cd go
-go run .
+go run pipeline.go
 ```
 
 This requires Go (1.26+) and Docker on your machine. The Dagger pipeline runs the same four
